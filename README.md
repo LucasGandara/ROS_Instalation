@@ -399,12 +399,7 @@ El topico que nos interesa es el mostrado en la figura, `/mrm/joint1_position_co
 
     rostopic pub /mrm/joint1_position_controller/command std_msgs/Float64 "data: 3.0"
 
-<figure controls="true" class="video_container">
-    <video poster="./figs/move_base_caption.png" autoplay>
-        <source src="./figs/move_base.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</figure>
+![Move base](figs/move_base.png "Mover la base")
 
 ## Recursos.
 
