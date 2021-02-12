@@ -246,6 +246,7 @@ Es importante tambien entender la syntaxis de los archivos urdf y la composició
 Observaciones:
 - Unidades en SI (Metros, radianes, kilogramos)
 - Existen 3 figuras básicas que se pueden utilizar: box, cylinder, sphere
+- Las unidades de masa deben ser coherentes a la vez que los momentos de inercia. adjunto está un script de python con un calculador de inercias. [Click Aquí](/Inercias.md)
 
 Ejemplos
 ```xml
@@ -399,7 +400,70 @@ El topico que nos interesa es el mostrado en la figura, `/mrm/joint1_position_co
 
     rostopic pub /mrm/joint1_position_controller/command std_msgs/Float64 "data: 3.0"
 
+Debería verse algo como esto:
+
 ![Move base](figs/move_base.png "Mover la base")
+
+Ahora estamos listos para interactuar con nuestro robot por medio de un script y ejecurarlo con el comando `rosrun`, para esto nuestro archivo de python llamando `demo_mrm.py`:
+
+    roscd my_manipulator_description
+    touch src/demo_mrm.py
+
+En este archivo copiamos el archivo [demo_mrm.py](src/demo_mrm.py). Este archivo crea un nodo llamado ` joint_mover` en la linea 14:
+```python
+rospy.init_node('joint_mover', anonymous=True)
+```
+y a su vez crea un `publisher` el cual se encarga de enviar mensajes al tópico `/mrm/joint1_position_controller/command`, esto lo vemos en las lineas 16, 17:
+```python
+joint_mover_topic_name = '/mrm/joint1_position_controller/command'
+move_base = rospy.Publisher(joint_mover_topic_name, Float64, queue_size=1)
+``` 
+El resto del programa es lógica para entrar en un bucle y pedir angulos a los cuales la base irá, para cerrar basta con ingresar la letra `Q`.
+
+Para publicar el valor ingresado, se le dice al `Publisher` Creado que envíe los datos en forma de `Float64`, esto lo vemos en la linea 34:
+```python
+# Topic es el *Publisher* creado, fue pasado como parametro a la funcion loop
+topic.publish(angulo)
+```
+Para saber que tipo de mensaje debemos enviar, basta con pedir información de la composición del mensaje del topico en cuestión, para eso corremos el siguiente comando en la terminal:
+
+    rostopic info /mrm/joint1_position_controller/command
+
+lo cual nos saca la siguiente salida:
+![rostopic info](/figs/rostopic_info.png "rostopic info")
+
+Vemos que el tipo de mensaje es `std_msgs/Float64`, es por esto que en la linea 4 importamos ese tipo de mensajes de una de las librerias que viene con la instalación de ros:
+```python
+from std_msgs.msg import Float64
+```
+
+y para saber como se conforma este tipo de mensajes, basta con pedir información al mensaje desde la consola con el siguiente comando:
+
+    rosmsg show std_msgs/Float64
+
+lo cual nos saca la siguiente salida:
+![rosmsg show](/figs/rosmsg_info.png "rosmsg show")
+
+es por esto que en la linea 32 llenamos el parametro `data` de la variable `angulo` como se muestran en las lineas 22:
+
+```python
+# Definición de la variable angulo tipo Float64
+angulo = Float64()
+```
+y la linea 32:
+```python
+# float(entrada) convierte la -entrada-(string) en tipo flotante
+angulo.data = float(entrada)
+```
+de igual forma podemos ver esto directamente en la [documentación](http://docs.ros.org/en/jade/api/std_msgs/html/msg/Float64.html)
+
+### Terminando nuestro Manipulador
+En este documento aprendimos las bases de
 
 ## Recursos.
 
+- [My Robotic Manipulator](https://www.youtube.com/watch?v=Ale55LcdZeE&list=PLK0b4e05LnzYpDnNeWJcQLju7JfJFX-lk&index=1&pbjreload=101) - Este turorial video por [The Construct](https://www.youtube.com/channel/UCt6Lag-vv25fTX3e11mVY1Q)
+- [rospy](http://docs.ros.org/en/jade/api/rospy/html/rospy-module.html#on_shutdown) - Documentación libreria rospy
+- [Código](https://bitbucket.org/theconstructcore/my-robotic-manipulator/src/master/) - del proyecto completado.
+- [Cursos](https://www.theconstructsim.com) - The construct
+- [ROS Online](https://app.theconstructsim.com/#/Rosjects) - Para utiliar ROS en el navegador 
