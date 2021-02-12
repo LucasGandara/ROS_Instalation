@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+
+<robot name="mrm">
+
+    <link name="base_link">
+
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="1024"/>
+            <inertia ixx="170.667" ixy="0.0" ixz="0.0" iyy="170.667" iyz="0.0" izz="170.667"/>
+        </inertial>
+        
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="1 1 1"/>
+            </geometry>
+            <material name="cyan">
+                <color rgba="0 1.0 1.0 1.0"/>
+            </material>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo reference="base_link">
+        <material>Gazebo/Bricks</material>
+    </gazebo>
+    
+    <link name="link1">
+
+        <inertial>
+            <origin xyz="0.0 0.0 -0.1" rpy="0.0 0.0 0.0"/>
+            <mass value="157.633"/>
+            <inertia ixx="13.235" ixy="0.0" ixz="0.0" iyy="13.235" iyz="0.0" izz="9.655"/>
+        </inertial>
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 -0.1"/>
+            <geometry>
+                <mesh filename="package://my_manipulator_description/models/Link1-v2.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 -0.1" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://my_manipulator_description/models/Link1-v2.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo reference="link1">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+    <joint name="base_link__link_01" type="revolute">
+        <origin rpy="0 0 0" xyz="0 0 0.5"/>
+        <parent link="base_link"/>
+        <child link="link1"/>
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5" />
+    </joint>
+
+    <transmission name="trans_base_link__link_01">
+        <type>transmission_interface/SimpleTransmission</type>
+            <joint name="base_link__link_01">
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            </joint>
+
+        <actuator name="motor_base_link__link_01">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so" />
+    </gazebo>
+
+</robot>
