@@ -449,6 +449,7 @@ y para saber como se conforma este tipo de mensajes, basta con pedir informació
     rosmsg show std_msgs/Float64
 
 lo cual nos saca la siguiente salida:
+
 ![rosmsg show](/figs/rosmsg_info.png "rosmsg show")
 
 es por esto que en la linea 32 llenamos el parametro `data` de la variable `angulo` como se muestran en las lineas 22:
@@ -475,3 +476,4 @@ En este documento aprendimos las bases de
 - [Cursos](https://www.theconstructsim.com) - The construct
 - [ROS Online](https://app.theconstructsim.com/#/Rosjects) - Para utiliar ROS en el navegador.
 - [SolidWorks to URDF](https://www.youtube.com/watch?v=BpOeQsPOAXg) - Como exportar desde solidworks a URDF
+- [SolidWorks to URDF Exporter](http://wiki.ros.org/sw_urdf_exporter) - Plugin Para exportar modelos de SOLIDWORKDS a formato URDF
