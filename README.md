@@ -4,6 +4,9 @@
 ---
 El sistema operativo de los robots (ROS) es un framework flexible para escribir software de robótica. Es una colección de herramientas, librerias, y convenciones que apuntan a simplificar la tarea de crear complejos y robustos comportamientos robóticos en una amplia variedad de plataformas robóticas.
 
+### Antes de empezar (recomendado)
+[Preparar vscode](/vscode.md)
+
 ## Empezando 
 ---
 ### Instalación ([Kinetic KAME](http://wiki.ros.org/kinetic))
@@ -288,6 +291,10 @@ En este archivo copiamos los siguiente:
 ```
 <mark style="background-color: green; color: white">Código del archivo rviz_urdf_visualize.launch</mark>
 
+Para ver nuestro modelo en `rviz` procedemos a "lanzarlo"
+
+    roslaunch my_manipulator_description rviz_urdf_visualize.launch model:='$(find my_manipulator_description)/urdf/mrm.urdf'
+
 Para entender cómo se compone este archivo dar [click aquí](urdf_visualize_composition.md)
 <br><br>
 
@@ -466,4 +473,4 @@ En este documento aprendimos las bases de
 - [rospy](http://docs.ros.org/en/jade/api/rospy/html/rospy-module.html#on_shutdown) - Documentación libreria rospy
 - [Código](https://bitbucket.org/theconstructcore/my-robotic-manipulator/src/master/) - del proyecto completado.
 - [Cursos](https://www.theconstructsim.com) - The construct
-- [ROS Online](https://app.theconstructsim.com/#/Rosjects) - Para utiliar ROS en el navegador 
+- [ROS Online](https://app.theconstructsim.com/#/Rosjects) - Para utiliar ROS en el navegador.
