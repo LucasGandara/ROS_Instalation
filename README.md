@@ -474,3 +474,4 @@ En este documento aprendimos las bases de
 - [Código](https://bitbucket.org/theconstructcore/my-robotic-manipulator/src/master/) - del proyecto completado.
 - [Cursos](https://www.theconstructsim.com) - The construct
 - [ROS Online](https://app.theconstructsim.com/#/Rosjects) - Para utiliar ROS en el navegador.
+- [SolidWorks to URDF](https://www.youtube.com/watch?v=BpOeQsPOAXg) - Como exportar desde solidworks a URDF
